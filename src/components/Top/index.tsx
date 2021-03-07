@@ -1,11 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import { VFC } from 'react';
 import { MainHeader, NavIconItem } from './styles';
-
-const Top = () => {
-  const onMouseClick = useCallback((e) => {
-    const eClassList = e.target.classList;
-    eClassList.contains('active') ? eClassList.remove('active') : eClassList.add('active');
-  }, []);
+interface Props {
+  onMouseClick: (e: React.MouseEvent<HTMLElement>) => void;
+}
+const Top: VFC<Props> = ({ onMouseClick }) => {
   return (
     <MainHeader>
       <ul>

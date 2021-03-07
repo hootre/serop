@@ -1,5 +1,5 @@
 import reset from 'styled-reset';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
@@ -17,5 +17,14 @@ const GlobalStyles = createGlobalStyle`
     }
     
 `;
-
+export const Container = styled.section`
+  height: 100vh;
+  padding: 0 10%;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  outline: none;
+`;
 export default GlobalStyles;

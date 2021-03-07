@@ -1,15 +1,15 @@
-import Footer from '@components/Footer';
-import Top from '@components/Top';
 import GlobalStyles from '@components/GlobalStyles';
 import { AppProps } from 'next/app';
+import TopContainer from '@container/TopContainer';
+import FooterContainer from '@container/FooterContainer';
+import AppLayout from 'src/layouts/AppLayout';
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Top />
-      <Component {...pageProps} />
-      <Footer />
-      <GlobalStyles />
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
     </>
   );
 }

@@ -33,7 +33,7 @@ export const MainHeader = styled.div`
       padding: 1px;
       background-color: #00b0f0;
       transform: scaleY(0) translate(-50%, 2px);
-      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
       transform-origin: bottom;
     }
     &.active::after,
