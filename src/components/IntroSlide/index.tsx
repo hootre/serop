@@ -27,26 +27,40 @@ const slideData = [
 ];
 
 const IntroSlide = () => {
-  let isSelecte = 0;
-
   // 콜백Ref예시
   // const curImg = useCallback((node) => {
   //   if (node !== null) {
   //     setIsSelecte(node.carousel.childElementCount);
   //   }
   // }, []);
+  let isSelecte = 0;
+  let isClicking = true;
   const handleSlide = useCallback(() => {
-    const slideBox = document.getElementsByClassName('is-selected');
-    const contentBox = document.getElementsByClassName('nav_item');
-    isSelecte = parseInt(slideBox[0].alt);
+    if (isClicking) {
+      isClicking = false;
+      const slideBox = document.getElementsByClassName('is-selected');
+      const contentBox = document.getElementsByClassName('nav-item');
+      isSelecte = parseInt(slideBox[0].alt);
 
-    console.log(isSelecte);
-    Array.from(contentBox).map((item, index) => {
-      item.classList.remove('nav-selected');
-      if (index === isSelecte) {
-        item.classList.add('nav-selected');
-      }
-    });
+      console.log(isSelecte);
+      Array.from(contentBox).map((item, index) => {
+        item.classList.remove('nav-selected');
+        if (index === isSelecte) {
+          item.childNodes[0].classList.remove('textAnimation');
+          item.childNodes[1].classList.remove('textAnimation');
+          item.childNodes[2].classList.remove('textAnimation');
+          setTimeout(function () {
+            item.childNodes[0].classList.add('textAnimation');
+            item.childNodes[1].classList.add('textAnimation');
+            item.childNodes[2].classList.add('textAnimation');
+          }, 0);
+
+          item.classList.add('nav-selected');
+        }
+      });
+
+      isClicking = true;
+    }
   }, []);
 
   const flickityMainOptions = {
@@ -178,10 +192,10 @@ const IntroSlide = () => {
           <IntroContent>
             {slideData.map((slide, index) => {
               return (
-                <div className={index === 1 ? 'nav_item nav-selected' : 'nav_item'}>
-                  <h1>{slide.title}</h1>
-                  <span>{slide.content}</span>
-                  <ul>
+                <div className={index === 1 ? 'nav-item nav-selected' : 'nav-item'}>
+                  <h1 className="textAnimation">{slide.title}</h1>
+                  <span className="textAnimation">{slide.content}</span>
+                  <ul className="textAnimation">
                     {slide.skill.map((item: string | undefined) => {
                       return (
                         <li key={item}>
@@ -204,7 +218,7 @@ const IntroSlide = () => {
               static // default false
             >
               {slideData.map((slide, index) => {
-                return <img style={{ marginLeft: 12, marginRight: 12 }} src={slide.image} alt={index} />;
+                return <img style={{ marginLeft: 12, marginRight: 12 }} src={slide.image} alt={index + ''} />;
               })}
             </Flickity>
           </IntroSlideBox>

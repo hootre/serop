@@ -67,6 +67,34 @@ export const IntroContent = styled.div`
     line-height: 70px;
     overflow: hidden;
   }
+  & > div > .textAnimation {
+    animation-name: clip-text;
+  }
+  & > div > h1:after {
+    content: '';
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00131a;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+  & > div > .textAnimation:after {
+    animation-name: text-revealer;
+  }
+  & > div > h1,
+  & > div > h1:after {
+    animation-delay: var(--animation-delay, 500ms);
+    animation-iteration-count: var(--iterations, 1);
+    animation-duration: var(--duration, 800ms);
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
   & > div > span {
     font-size: 3rem;
     max-height: 134px;
@@ -74,22 +102,92 @@ export const IntroContent = styled.div`
     top: 150%;
     overflow: hidden;
   }
+  & > div > span:after {
+    content: '';
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00131a;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+  & > div > span,
+  & > div > span:after {
+    animation-delay: var(--animation-delay, 1000ms);
+    animation-iteration-count: var(--iterations, 1);
+    animation-duration: var(--duration, 800ms);
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
   & > div > ul {
     display: flex;
     position: absolute;
     top: 250%;
   }
+  & > div > ul:after {
+    content: '';
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00131a;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+  & > div > ul,
+  & > div > ul:after {
+    animation-delay: var(--animation-delay, 1000ms);
+    animation-iteration-count: var(--iterations, 1);
+    animation-duration: var(--duration, 800ms);
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
   & > div > ul li {
     padding: 10px;
   }
-  & > .nav_item {
+  & > .nav-item {
     opacity: 0;
     position: absolute;
     top: 0;
     left: 10%;
   }
-  & > .nav_item.nav-selected {
+  & > .nav-item.nav-selected {
     opacity: 1;
+  }
+  @keyframes clip-text {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes text-revealer {
+    0%,
+    50% {
+      transform-origin: 0 50%;
+    }
+
+    60%,
+    100% {
+      transform-origin: 100% 50%;
+    }
+
+    60% {
+      transform: scaleX(1);
+    }
+
+    100% {
+      transform: scaleX(0);
+    }
   }
 `;
 export const IntroSlideBox = styled.div`
