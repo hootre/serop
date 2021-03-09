@@ -1,11 +1,36 @@
 import styled from '@emotion/styled';
 const images = [
-  'https://images.unsplash.com/photo-1483068612337-c045daaca40e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&s=6de8746a693acc34ebe9e9a15c4c18d1',
+  'https://itcm.co.kr/files/attach/images/813/596/782/325f0acced8215b4b49a8f5a9a207a8c.png',
   'https://images.unsplash.com/photo-1489914099268-1dad649f76bf?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&s=f21f40bb93bae58300e83f7f72ebb5a5',
   'https://images.unsplash.com/photo-1490100667990-4fced8021649?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&s=247f52de1a292b8a1877b0c7dd77a291',
   'https://images.unsplash.com/photo-1494783404829-a93883e74b68?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&s=413f5f5c41f4db69a1474d92419601ac',
 ];
-export const IntroBox = styled.div`
+function Circle(i: number, className: string) {
+  return `
+    & .${className + i}{
+      transition-delay: ${i / 20}s;
+    }
+  `;
+}
+
+function forCircle10(startNum: number, className: string, length: number) {
+  let str = '';
+  for (let i = startNum; i < startNum + length; i++) {
+    str += Circle(i, className);
+  }
+  return str;
+}
+
+function slideListSet(slideLength: number) {
+  let str = '';
+  for (let i = 0; i < slideLength; i++) {
+    str += `& .slide${i + 1}{
+      background-image: url(${images[i]});
+    }`;
+  }
+  return str;
+}
+export const IntroBox = styled.div<{ slideList: number }>`
   width: 100%;
   height: 70vh;
   margin: auto auto;
@@ -15,12 +40,14 @@ export const IntroBox = styled.div`
   -moz-box-shadow: 0 0 88px 5px rgba(0, 0, 0, 0.75);
   box-shadow: 0 0 88px 5px rgba(0, 0, 0, 0.75);
   border-radius: 50px;
-  background-image: url(https://itcm.co.kr/files/attach/images/813/596/782/325f0acced8215b4b49a8f5a9a207a8c.png);
   background-size: cover;
   display: flex;
   & svg {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    z-index: 1;
+    top: 0;
+    left: 0;
   }
 
   & circle {
@@ -35,21 +62,43 @@ export const IntroBox = styled.div`
     }
   }
 
-  & #svg2 {
-    circle {
-      transition-timing-function: linear;
-    }
+  ${slideListSet(3)}
+  & .slide1,
+  & .slide2,
+  & .slide3 {
+    position: absolute;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    font-size: 62px;
+    padding-top: 138px;
+    font-weight: 800;
+    font-family: 'Heebo', sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    transition: 1.4s;
   }
 
-  ${forCircle10(1, 'circle', 9)}
-  ${forCircle10(10, 'circle', 9)}
-`;
-export const BackSlider = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
-  overflow: hidden;
+  & .tran {
+    transform: scale(1.3);
+  }
+
+  & .up1 {
+    opacity: 1;
+  }
+
+  & .steap {
+    stroke-width: 0;
+  }
+
+  & .streak {
+    stroke-width: 120px;
+  }
+
+  ${forCircle10(1, 'circle', 12)}
 `;
 export const IntroContent = styled.div`
   width: 50%;
@@ -211,18 +260,39 @@ export const IntroSlideBox = styled.div`
   }
 `;
 
-function Circle(i: number, className: string) {
-  return `
-    & .${className + i}{
-      transition-delay: ${i / 20}s;
-    }
-  `;
-}
-
-function forCircle10(startNum: number, className: string, length: number) {
-  let str = '';
-  for (let i = startNum; i < startNum + length; i++) {
-    str += Circle(i, className);
+export const ScrollMouse = styled.div`
+  position: absolute;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  & .mouse {
+    max-width: 4rem;
+    width: 100%;
+    height: auto;
   }
-  return str;
-}
+  & .scroll {
+    animation-name: scroll;
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(0.65, -0.55, 0.25, 1.5);
+    animation-iteration-count: infinite;
+    transform-origin: 50% 20.5px;
+    will-change: transform, opacity;
+    opacity: 1;
+  }
+  @keyframes scroll {
+    0%,
+    20% {
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  @keyframes scroll {
+    ... 10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(36px) scaleY(2);
+      opacity: 0.01;
+    }
+  }
+`;
