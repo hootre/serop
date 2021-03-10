@@ -1,5 +1,7 @@
 import { Container } from '@components/GlobalStyles';
 import IntroSlideContainer from '@container/IntroSlideContainer';
+import ProjectContainer from '@container/ProjectContainer';
+import useData from '@hooks/useData';
 import Head from 'next/head';
 import { isObject } from 'node:util';
 import { useCallback, useEffect } from 'react';
@@ -10,9 +12,9 @@ const onScroll = useCallback(
   (e) => {
     if(throttle){
       
+      console.log("스크롤이벤트")
       throttle = false;
       setTimeout(()=>{
-        console.log("스크롤이벤트")
         
         // 리스트 셀렉트 해두고 1번쨰 section-select
         // 아래로 했을 때 현재 셀렉트에 다음 것으로 이동
@@ -26,7 +28,7 @@ const onScroll = useCallback(
         // contact me
         // End
         throttle = true;
-      }, 1000);
+      }, 3000);
     }
     
   },
@@ -42,7 +44,27 @@ const onScroll = useCallback(
         <meta name="description" content="전동준의 포트폴리오 사이트입니다~"></meta>
       </Head>
       <IntroSlideContainer />
+      {/* PROFILE
+       이름, 이메일, 깃헙
+       Introduc
+       자기소개 
+      
+      */}
+      <Container >
+        <ProjectContainer />
+      </Container>
+      {/* 프로젝트 들어갈 내용 
+        1. 기간
+        2. 이름
+        3. 기술스택
+        4. 내가 한 일
+        5. 설명    
+        */}
       <Container />
+      {/*
+        contact
+        이메일 발송 폼 해도되고 안해도 되고 보류
+        */}
       <Container />
     </>
   );

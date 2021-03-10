@@ -50,5 +50,6 @@ export const Container = styled.section`
   justify-content: center;
   flex-direction: column;
   outline: none;
+  position: relative;
 `;
 export default GlobalStyles;
