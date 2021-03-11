@@ -51,5 +51,6 @@ export const Container = styled.section`
   flex-direction: column;
   outline: none;
   position: relative;
+  transtion: all 2s;
 `;
 export default GlobalStyles;

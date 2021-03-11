@@ -1,6 +1,6 @@
 import { Container } from '@components/GlobalStyles';
-import React, { createRef, useCallback, useEffect, useRef, useState, VFC } from 'react';
-import { IntroBox, BackSlider, IntroContent, IntroSlideBox, ScrollMouse } from './styles';
+import React, { useCallback, VFC } from 'react';
+import { IntroBox, IntroContent, IntroSlideBox, ScrollMouse } from './styles';
 import Flickity from 'react-flickity-component';
 
 import 'flickity/css/flickity.css';
@@ -18,7 +18,7 @@ const IntroSlide: VFC<Props> = ({ handleSlide, slideData }) => {
     handleSlide(e);
   }, []);
   return (
-    <Container>
+    <Container className="section_container">
       <IntroBox slideList={slideData.length}>
         <svg id="svg1" className="up2" xmlns="http://www.w3.org/2000/svg">
           <circle id="circle1" className="circle1 steap" cx="50%" cy="49%" r="3%" />
@@ -36,7 +36,7 @@ const IntroSlide: VFC<Props> = ({ handleSlide, slideData }) => {
         <IntroContent>
           {slideData.map((slide, index) => {
             return (
-              <div className={index === 1 ? 'nav-item nav-selected' : 'nav-item'}>
+              <div className={index === 1 ? 'nav-item nav-selected' : 'nav-item'} key={slide.title}>
                 <h1 className="textAnimation">
                   <span>{slide.title}</span>
                 </h1>
@@ -64,20 +64,33 @@ const IntroSlide: VFC<Props> = ({ handleSlide, slideData }) => {
             static // default false
           >
             {slideData.map((slide, index) => {
-              return <img style={{ marginLeft: 12, marginRight: 12 }} src={slide.image} alt={index + ''} />;
+              return (
+                <img
+                  style={{ marginLeft: 12, marginRight: 12, width: '200px', height: '250px', backgroundSize: 'cover' }}
+                  src={slide.image}
+                  alt={index + ''}
+                  key={slide.title}
+                />
+              );
             })}
           </Flickity>
         </IntroSlideBox>
-        {slideData.map((item, index) => {
-          return <div id={`slide${index + 1}`} className={`slide${index + 1} ${index === 1 ? 'up1' : ' '}`}></div>;
+        {slideData.map((slide, index) => {
+          return (
+            <div
+              id={`slide${index + 1}`}
+              className={`slide${index + 1} ${index === 1 ? 'up1' : ' '}`}
+              key={slide.title}
+            />
+          );
         })}
       </IntroBox>
       <ScrollMouse>
         <svg className="mouse" xmlns="..." viewBox="0 0 76 130" preserveAspectRatio="xMidYmid meet">
           {' '}
-          <g fill="none" fill-rule="evenodd">
+          <g fill="none" fillRule="evenodd">
             {' '}
-            <rect width="70" height="118" x="1.5" y="1.5" stroke="#FFF" stroke-width="3" rx="36" />{' '}
+            <rect width="70" height="118" x="1.5" y="1.5" stroke="#FFF" strokeWidth="3" rx="36" />{' '}
             <circle className="scroll" cx="36.5" cy="31.5" r="4.5" fill="#FFF" />{' '}
           </g>{' '}
         </svg>

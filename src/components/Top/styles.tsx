@@ -5,6 +5,7 @@ export const MainHeader = styled.div`
   top: 10%;
   left: 0;
   max-height: 800px;
+  z-index: 200;
   & > ul > li {
     text-align: center;
     writing-mode: vertical-lr;
