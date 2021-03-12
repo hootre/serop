@@ -1,58 +1,63 @@
+import { Container } from '@components/GlobalStyles';
+import IntroSlideContainer from '@container/IntroSlideContainer';
+import ProfileContainer from '@container/ProfileContainer';
+import ProjectContainer from '@container/ProjectContainer';
 import Head from 'next/head';
-import styles from '@styles/Home.module.css';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Home() {
+  const onScroll = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.removeEventListener('mousewheel', onScroll);
+    console.log('스크롤이벤트');
+    if (e.wheelDelta == 120) {
+      // downscroll code
+      console.log('up');
+      const body = document.getElementsByTagName('body')[0];
+      window.scrollTo({
+        behavior: 'smooth',
+        top: body.offsetTop,
+      });
+    } else {
+      // upscroll code
+      console.log('down');
+    }
+    setTimeout(() => {
+      window.addEventListener('mousewheel', onScroll);
+    }, 1000);
+  }, []);
+  useEffect(() => {
+    window.addEventListener('mousewheel', onScroll);
+  }, []);
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>DongJun PortFolio</title>
+        <meta name="description" content="전동준의 포트폴리오 사이트입니다~"></meta>
       </Head>
+      <IntroSlideContainer />
+      {/* 프로젝트 들어갈 내용 
+        1. 기간
+        2. 이름
+        3. 기술스택
+        4. 내가 한 일
+        5. 설명    
+        */}
+      <ProjectContainer />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a href="https://github.com/vercel/next.js/tree/master/examples" className={styles.card}>
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+      {/* PROFILE
+       이름, 이메일, 깃헙
+       Introduc
+       자기소개 
+      
+      */}
+      <ProfileContainer />
+      {/*
+        contact
+        이메일 발송 폼 해도되고 안해도 되고 보류
+        */}
+      <Container />
+    </>
   );
 }
